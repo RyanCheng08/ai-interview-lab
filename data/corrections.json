@@ -1,0 +1,346 @@
+[
+  {
+    "questionId": "prompt-5.3.1",
+    "kind": "scope",
+    "title": "自洽投票应讨论模型答案聚合",
+    "body": "原解答讨论的是人类投票的激励兼容与抗操控，偏离了提示工程中的 Self-Consistency。该方法对同一问题采样多条推理路径，再聚合最终答案、选择支持度最高的结果。它不需要假设人类投票者具有单峰偏好或诚实投票策略。",
+    "references": [
+      {
+        "title": "Self-Consistency 原论文",
+        "url": "https://arxiv.org/abs/2203.11171"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-5.3.2",
+    "kind": "scope",
+    "title": "一致性来自多条推理路径的答案",
+    "body": "原解答中的偏好表达、单峰性和诚实投票属于社会选择问题。Self-Consistency 关注同一任务经不同推理路径产生的最终答案是否一致，并依据答案聚合结果进行选择。备考时应补充答案归一化与聚合方法，同时保留对少数正确答案可能被多数错误答案淹没的检查。",
+    "references": [
+      {
+        "title": "Self-Consistency 原论文",
+        "url": "https://arxiv.org/abs/2203.11171"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-5.3.3",
+    "kind": "scope",
+    "title": "自洽采样与多轮人类投票需区分",
+    "body": "原解答采用博弈论与均衡分析解释多轮人类投票，未解释 Self-Consistency 的采样和答案聚合。原论文方法是在同一问题上生成多条推理路径后聚合答案，并不以多轮人类投票为前提。若另行设计多轮模型验证，应明确其采样、聚合和终止规则，不能直接将其等同于原论文方法。",
+    "references": [
+      {
+        "title": "Self-Consistency 原论文",
+        "url": "https://arxiv.org/abs/2203.11171"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-10.1.1",
+    "kind": "scope",
+    "title": "提示压缩的对象是输入上下文",
+    "body": "原解答讲的是数值特征的相关性筛选与 PCA，属于特征工程。提示压缩处理的是送入语言模型的文本或上下文，需要在 Token 预算内删除冗余并保留任务所需信息。LLMLingua 等方法提供上下文、句子或 Token 层面的筛选，可作为此题域的参考。",
+    "references": [
+      {
+        "title": "Microsoft LLMLingua 官方项目",
+        "url": "https://github.com/microsoft/LLMLingua"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-10.1.2",
+    "kind": "scope",
+    "title": "模型参数压缩与提示压缩需区分",
+    "body": "剪枝、量化和知识蒸馏属于模型压缩，原答案在该领域有其适用场景。提示压缩主要缩短模型输入，而非修改被调用模型的参数。回答提示工程问题时，应转向输入内容的筛选、压缩预算及压缩后的任务质量评估。",
+    "references": [
+      {
+        "title": "Microsoft LLMLingua 官方项目",
+        "url": "https://github.com/microsoft/LLMLingua"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-10.1.3",
+    "kind": "scope",
+    "title": "提示压缩需评估关键信息保留",
+    "body": "原解答围绕剪枝与量化的程度展开，属于模型参数压缩。提示压缩中的过度压缩是输入里必要的指令、证据或约束被删去。应比较压缩前后的任务表现与 Token 消耗，并对关键内容设置保留策略。",
+    "references": [
+      {
+        "title": "Microsoft LLMLingua 官方项目",
+        "url": "https://github.com/microsoft/LLMLingua"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-10.1.4",
+    "kind": "scope",
+    "title": "文本信息筛选不等同于特征选择",
+    "body": "相关分析、卡方检验和 Lasso 主要用于数值特征选择，不能直接作为通用的提示文本压缩流程。提示压缩需要根据当前任务筛选上下文、句子或 Token，并检查必要语义是否保留。原答案可留作特征工程补充，但本节还应学习文本压缩方法。",
+    "references": [
+      {
+        "title": "Microsoft LLMLingua 官方项目",
+        "url": "https://github.com/microsoft/LLMLingua"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-16.3.1",
+    "kind": "scope",
+    "title": "上下文滑窗应围绕 Token 预算",
+    "body": "原解答讲的是连续数组上避免重复计算的滑动窗口算法。对话上下文管理通常按消息或 Token 预算保留近期内容，并通过裁剪或摘要控制输入长度。数组滑窗的 O(n) 结论不能直接证明语言模型调用的成本或耗时。",
+    "references": [
+      {
+        "title": "LangChain 短期记忆与消息裁剪",
+        "url": "https://docs.langchain.com/oss/python/langchain/short-term-memory"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-16.3.2",
+    "kind": "scope",
+    "title": "单调队列最大值属于数组算法",
+    "body": "递减双端队列维护窗口最大值是数组算法中的方法。语言模型上下文管理应关注保留哪些消息、输入 Token 上限以及消息序列是否仍然有效，而不是查询窗口中的数值最大值。可参考消息裁剪工具的 Token 预算与保留策略。",
+    "references": [
+      {
+        "title": "LangChain 短期记忆与消息裁剪",
+        "url": "https://docs.langchain.com/oss/python/langchain/short-term-memory"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-16.3.3",
+    "kind": "scope",
+    "title": "动态上下文窗口需维护消息语义",
+    "body": "原解答中的双指针与子数组条件用于数组或字符串算法。动态管理语言模型上下文时，应按 Token 预算调整保留的消息，并检查裁剪后的角色、工具调用与工具结果是否完整衔接。需要长期保留的信息可配合摘要或外部记忆，不能仅依赖移动数组边界。",
+    "references": [
+      {
+        "title": "LangChain 短期记忆与消息裁剪",
+        "url": "https://docs.langchain.com/oss/python/langchain/short-term-memory"
+      }
+    ]
+  },
+  {
+    "questionId": "prompt-20.1.1",
+    "kind": "correction",
+    "title": "Git 以快照为逻辑模型",
+    "body": "原答案称 Git 只存储文件差异，这混淆了提交模型与底层存储优化。Git 在逻辑上记录项目状态的快照，未改变的文件可复用已有对象。Packfile 可以使用 delta 压缩节省空间，但这不意味着提交的逻辑模型只记录 diff。",
+    "references": [
+      {
+        "title": "Git 官方教材：快照模型",
+        "url": "https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F"
+      },
+      {
+        "title": "Git 官方教材：Packfiles 与 delta 压缩",
+        "url": "https://git-scm.com/book/en/v2/Git-Internals-Packfiles"
+      }
+    ]
+  },
+  {
+    "questionId": "llm-5.1.1",
+    "kind": "correction",
+    "title": "Skip-Gram 的预测方向",
+    "body": "原答案把 Skip-Gram 写成给定上下文预测中心词，预测方向颠倒。Skip-Gram 使用中心词预测周围的上下文词；CBOW 使用上下文词预测中心词。两者都用于学习词向量，但应分别记清输入与训练目标。",
+    "references": [
+      {
+        "title": "Word2Vec 原论文",
+        "url": "https://arxiv.org/abs/1301.3781"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.1.1",
+    "kind": "scope",
+    "title": "RAG 查询改写关注自然语言检索请求",
+    "body": "原解答中的视图展开、JOIN 转换与谓词下推属于 SQL 查询优化。RAG 查询改写通常调整自然语言检索请求，使用户输入更适合检索所需知识。备考时应补充问题补全、重述与检索效果验证，而非将 SQL 优化规则直接当作自然语言改写方法。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.1.2",
+    "kind": "scope",
+    "title": "语义保持应检查用户检索意图",
+    "body": "原解答主要检查 SQL 的 NULL、排序和唯一性语义，属于关系数据库题域。RAG 自然语言改写应保留用户意图与已有上下文，检查是否改变实体、条件或问题目标。应通过改写前后的检索与最终回答效果进行验证。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.1.3",
+    "kind": "scope",
+    "title": "改写检索请求与 SQL 索引优化需区分",
+    "body": "原解答中的索引列、函数表达式和回表操作属于 SQL 索引优化。RAG 改写是在检索之前调整请求表达，帮助检索器定位相关知识，并不自动改变数据库索引结构。应分别评估查询表达的改进与索引参数调优。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.1.4",
+    "kind": "scope",
+    "title": "改写的代价应在 RAG 链路评估",
+    "body": "原解答讲的是视图展开、多表连接与 SQL 执行计划。RAG 查询改写需要检查用户意图是否保留、检索质量是否提升，以及额外模型调用带来的成本和延迟。建议以真实问题集比较原始查询与改写查询的端到端效果。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.2.1",
+    "kind": "scope",
+    "title": "检索扩展不限于 SQL 表达能力",
+    "body": "原答案把查询扩展解释为子查询、CTE、视图和存储过程，属于 SQL 题域。RAG 检索增强可通过重新表达查询或生成辅助检索内容来扩大知识匹配机会。HyDE 是一种具体方法：先生成假设文档，再将其编码用于稠密检索，而非创建数据库视图。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      },
+      {
+        "title": "HyDE 原论文：生成假设文档辅助检索",
+        "url": "https://arxiv.org/abs/2212.10496"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.2.2",
+    "kind": "scope",
+    "title": "查询扩展需比较检索收益与代价",
+    "body": "原解答利用视图、CTE 和临时表减少 SQL 重复扫描，未讨论自然语言检索扩展。RAG 中扩展查询或生成辅助内容可能改善检索，也可能引入无关信息和额外调用。应比较检索质量、答案质量与响应成本，不能预设扩展一定更快。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      },
+      {
+        "title": "HyDE 原论文：生成假设文档辅助检索",
+        "url": "https://arxiv.org/abs/2212.10496"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.2.3",
+    "kind": "scope",
+    "title": "RAG 扩展的风险包括噪声与成本",
+    "body": "原解答中的递归深度、CTE 嵌套与执行计划属于 SQL 优化。对于 RAG，应检查扩展内容是否偏离原问题、是否引入无关候选以及额外生成和检索的成本。可用原始查询作为对照，并为扩展设置次数或规模限制。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      },
+      {
+        "title": "HyDE 原论文：生成假设文档辅助检索",
+        "url": "https://arxiv.org/abs/2212.10496"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-6.2.4",
+    "kind": "scope",
+    "title": "扩展策略应适配检索链路",
+    "body": "原解答围绕视图、CTE 与临时表选择展开，属于 SQL 题域。RAG 查询扩展应说明如何生成检索请求或辅助内容、如何执行检索，以及如何验证结果是否更有用。可将查询改写与 HyDE 作为不同方案比较，同时明确它们的适用条件与代价。",
+    "references": [
+      {
+        "title": "RAG 查询改写原论文",
+        "url": "https://arxiv.org/abs/2305.14283"
+      },
+      {
+        "title": "HyDE 原论文：生成假设文档辅助检索",
+        "url": "https://arxiv.org/abs/2212.10496"
+      }
+    ]
+  },
+  {
+    "questionId": "rag-12.2.1",
+    "kind": "correction",
+    "title": "CRAG 首先评估检索文档质量",
+    "body": "原答案将 CRAG 主要解释为收集用户修正、纠正输入和调整关键词匹配。原论文的关键是轻量检索评估器判断已检索文档的整体质量，并根据置信程度触发不同知识检索行动。其流程包含纠正或补充检索内容，必要时引入网页检索，不应简化为用户查询纠错。",
+    "references": [
+      {
+        "title": "Corrective RAG 原论文",
+        "url": "https://arxiv.org/abs/2401.15884"
+      }
+    ]
+  },
+  {
+    "questionId": "vector-7.4.2",
+    "kind": "correction",
+    "title": "Milvus 的四种一致性级别",
+    "body": "原答案仅介绍 Strong 与 Eventual，遗漏了其他级别。官方文档列出 Strong、Bounded Staleness、Session 与 Eventually 四种一致性级别，默认使用 Bounded Staleness。选择时应根据数据可见性要求与检索延迟进行权衡。",
+    "references": [
+      {
+        "title": "Milvus 官方一致性文档",
+        "url": "https://milvus.io/docs/consistency.md"
+      }
+    ]
+  },
+  {
+    "questionId": "vector-8.4.1",
+    "kind": "correction",
+    "title": "Weaviate 混合检索需要融合两路搜索",
+    "body": "原答案将混合检索解释为向量相似度查询加关键词过滤。Weaviate hybrid search 会并行执行向量搜索和 BM25 关键词搜索，再通过融合方法得到最终排名。过滤条件可另行限制候选范围，但不能替代关键词检索和两路得分融合。",
+    "references": [
+      {
+        "title": "Weaviate 官方混合检索文档",
+        "url": "https://docs.weaviate.io/weaviate/concepts/search/hybrid-search"
+      }
+    ]
+  },
+  {
+    "questionId": "langchain-13.1.1",
+    "kind": "scope",
+    "title": "LangChain 回调属于运行事件钩子",
+    "body": "原解答讲的是浏览器 DOM 事件从元素向 document 或 window 冒泡。LangChain 回调处理的是模型、链、工具或检索器的运行事件，例如 on_llm_start、on_chain_start 与 on_tool_start。应学习这些钩子的触发时机与运行信息传递，而非直接套用 DOM 传播规则。",
+    "references": [
+      {
+        "title": "LangChain 官方 CallbackManager 参考",
+        "url": "https://reference.langchain.com/python/langchain-core/callbacks/manager/CallbackManager"
+      }
+    ]
+  },
+  {
+    "questionId": "agent-2.1.2",
+    "kind": "correction",
+    "title": "Bag of Words 不是 Chain 封装机制",
+    "body": "原答案将 Bag of Words 称为保证子链信息流畅的封装机制，用词不正确。Bag of Words 是文本特征表示方法，通常通过词项出现情况或计数构造向量，不负责链步骤的接口封装。多步 Chain 应显式定义各步骤的输入输出、依赖和异常处理，并将上一步结果正确传给下一步。",
+    "references": [
+      {
+        "title": "scikit-learn 官方教材：Bag of Words",
+        "url": "https://scikit-learn.org/1.5/modules/feature_extraction.html#the-bag-of-words-representation"
+      }
+    ]
+  },
+  {
+    "questionId": "multimodal-6.2.2",
+    "kind": "correction",
+    "title": "BLIP 的预训练目标应区分于 VQA 下游任务",
+    "body": "原资料《多模态模型应用》6.2.2（PDF 第 38–39 页）将 BLIP 的预训练目标列为图像文本匹配、图像问答和图像描述生成。根据 BLIP 原论文第 3.2 节，联合预训练的三个目标是图像文本对比学习（ITC）、图像文本匹配（ITM）以及以图像为条件的语言建模（LM）。ITC 对齐图像与文本的表示空间；ITM 判断图文对是否匹配；LM 训练模型根据图像自回归生成描述。VQA 是论文评估和迁移的下游任务，应与预训练目标分开说明。建议面试回答明确 ITC、ITM、LM 的名称、作用及对应的编码器或解码器模式。本订正针对原始 BLIP，不应直接套用于 BLIP-2 或其他版本。",
+    "references": [
+      {
+        "title": "BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation（第 3.2 节）",
+        "url": "https://arxiv.org/pdf/2201.12086"
+      }
+    ]
+  },
+  {
+    "questionId": "multimodal-6.3.3",
+    "kind": "correction",
+    "title": "Flamingo 的自身训练目标与骨干预训练需要分开",
+    "body": "原资料《多模态模型应用》6.3.3（PDF 第 40 页）将 Flamingo 预训练概括为对比学习和多模态掩码等多任务目标。根据 Flamingo 原论文第 2 节，Flamingo 使用已预训练且冻结的视觉编码器与语言模型，通过可训练的 Perceiver Resampler 和带门控的跨注意力模块建立连接。第 2.4 节的目标是在网页图文交错数据、图文对及视频文本对等数据集上，最小化视觉条件下文本负对数似然的加权和，即视觉条件下的自回归语言建模。视觉骨干先前使用的对比预训练，不能当作 Flamingo 自身训练目标；用于限定图文依赖关系的注意力掩码，也不等于掩码语言建模损失。建议回答分别说明冻结骨干、训练连接模块、数据混合与自回归文本目标。",
+    "references": [
+      {
+        "title": "Flamingo: a Visual Language Model for Few-Shot Learning（第 2.1、2.2、2.4 节）",
+        "url": "https://arxiv.org/html/2204.14198"
+      }
+    ]
+  }
+]

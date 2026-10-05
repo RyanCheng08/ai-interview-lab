@@ -1,0 +1,114 @@
+{
+  "totalQuestions": 2464,
+  "uniqueIds": 2464,
+  "answerMissingTotal": 25,
+  "sources": {
+    "llm": {
+      "questions": 310,
+      "chapters": 19,
+      "sections": 89,
+      "answerMissing": 3,
+      "firstPage": 13,
+      "lastPage": 154,
+      "crossPageQuestions": 109
+    },
+    "prompt": {
+      "questions": 210,
+      "chapters": 20,
+      "sections": 62,
+      "answerMissing": 8,
+      "firstPage": 10,
+      "lastPage": 108,
+      "crossPageQuestions": 78
+    },
+    "rag": {
+      "questions": 198,
+      "chapters": 19,
+      "sections": 56,
+      "answerMissing": 0,
+      "firstPage": 9,
+      "lastPage": 100,
+      "crossPageQuestions": 76
+    },
+    "vector": {
+      "questions": 301,
+      "chapters": 22,
+      "sections": 87,
+      "answerMissing": 3,
+      "firstPage": 13,
+      "lastPage": 148,
+      "crossPageQuestions": 102
+    },
+    "langchain": {
+      "questions": 226,
+      "chapters": 22,
+      "sections": 65,
+      "answerMissing": 3,
+      "firstPage": 10,
+      "lastPage": 113,
+      "crossPageQuestions": 88
+    },
+    "agent": {
+      "questions": 158,
+      "chapters": 11,
+      "sections": 44,
+      "answerMissing": 0,
+      "firstPage": 7,
+      "lastPage": 79,
+      "crossPageQuestions": 62
+    },
+    "finetuning": {
+      "questions": 294,
+      "chapters": 18,
+      "sections": 83,
+      "answerMissing": 0,
+      "firstPage": 12,
+      "lastPage": 144,
+      "crossPageQuestions": 103
+    },
+    "multimodal": {
+      "questions": 317,
+      "chapters": 31,
+      "sections": 93,
+      "answerMissing": 8,
+      "firstPage": 13,
+      "lastPage": 158,
+      "crossPageQuestions": 121
+    },
+    "fullstack": {
+      "questions": 450,
+      "chapters": 15,
+      "sections": 90,
+      "answerMissing": 0,
+      "firstPage": 29,
+      "lastPage": 916,
+      "crossPageQuestions": 431
+    }
+  },
+  "originalTextAnomalies": [
+    {
+      "questionId": "prompt-1.4.4",
+      "field": "answer",
+      "pageStart": 16,
+      "pageEnd": 16,
+      "characters": "ся",
+      "note": "保留来源文本中的异语字符，未擅自替换或补写。"
+    },
+    {
+      "questionId": "multimodal-13.2.3",
+      "field": "explanation",
+      "pageStart": 71,
+      "pageEnd": 71,
+      "characters": "Мдеот",
+      "note": "保留来源文本中的异语字符，未擅自替换或补写。"
+    }
+  ],
+  "checks": {
+    "countsMatch": true,
+    "uniqueIds": true,
+    "pageBounds": true,
+    "pageOrder": true,
+    "noReplacementCharacters": true,
+    "noPageMarkerOrPublisherFooterLeakage": true
+  }
+}

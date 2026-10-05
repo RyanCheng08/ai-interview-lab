@@ -1,0 +1,513 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AI Interview Lab API",
+    "version": "1.0.0",
+    "description": "Private Sites access uses platform sign-in. Progress identity is read from trusted server authentication, never client userId. WeChat authentication requires a future adapter."
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/api/v1/catalog": {
+      "get": {
+        "summary": "Source catalog and chapters",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "pages": {
+                      "type": "integer"
+                    },
+                    "missingAnswers": {
+                      "type": "integer"
+                    },
+                    "annotations": {
+                      "type": "integer"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "chapters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/questions": {
+      "get": {
+        "summary": "Search source text and editorial notes",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 160
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chapterId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "all",
+                "unseen",
+                "learning",
+                "mastered",
+                "favorite",
+                "due"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "random",
+            "in": "query",
+            "schema": {
+              "enum": [
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuestionSummary"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "page": {
+                      "type": "integer"
+                    },
+                    "pageSize": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Progress filters require authentication"
+          },
+          "503": {
+            "description": "Progress unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/questions/{id}": {
+      "get": {
+        "summary": "Question detail and source pages",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Question"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown question"
+          }
+        }
+      }
+    },
+    "/api/v1/progress": {
+      "get": {
+        "summary": "Current user's progress",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Progress"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "503": {
+            "description": "Storage unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/progress/{id}": {
+      "put": {
+        "summary": "Save a note, bookmark or self-assessment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgressWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Progress"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or no changed fields"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Cross-origin browser request rejected"
+          },
+          "404": {
+            "description": "Unknown question"
+          },
+          "409": {
+            "description": "Revision changed; reload and reconcile"
+          },
+          "503": {
+            "description": "Storage unavailable"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Question": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "chapterId": {
+            "type": "string"
+          },
+          "chapterTitle": {
+            "type": "string"
+          },
+          "sectionTitle": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "pageStart": {
+            "type": "integer"
+          },
+          "answerMissing": {
+            "type": "boolean"
+          },
+          "sectionId": {
+            "type": "string"
+          },
+          "examFocus": {
+            "type": "string"
+          },
+          "explanation": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          },
+          "knowledge": {
+            "type": "string"
+          },
+          "extensions": {
+            "type": "string"
+          },
+          "pageEnd": {
+            "type": "integer"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "contentLanguage": {
+            "const": "zh-CN"
+          },
+          "annotations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Annotation"
+            }
+          }
+        }
+      },
+      "QuestionSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "chapterId": {
+            "type": "string"
+          },
+          "chapterTitle": {
+            "type": "string"
+          },
+          "sectionTitle": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "pageStart": {
+            "type": "integer"
+          },
+          "answerMissing": {
+            "type": "boolean"
+          },
+          "annotationCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "Annotation": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "correction",
+              "scope"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Progress": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string"
+          },
+          "favorite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 12000
+          },
+          "status": {
+            "enum": [
+              "unseen",
+              "learning",
+              "mastered"
+            ]
+          },
+          "reviewCount": {
+            "type": "integer"
+          },
+          "lastReviewedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "nextReviewAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "revision": {
+            "type": "integer"
+          }
+        }
+      },
+      "ProgressWrite": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expectedRevision",
+          "mutationId"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "note"
+            ]
+          },
+          {
+            "required": [
+              "favorite"
+            ]
+          },
+          {
+            "required": [
+              "status"
+            ]
+          }
+        ],
+        "properties": {
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "mutationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "favorite": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 12000
+          },
+          "status": {
+            "enum": [
+              "unseen",
+              "learning",
+              "mastered"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
