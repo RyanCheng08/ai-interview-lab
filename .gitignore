@@ -39,6 +39,7 @@ next-env.d.ts
 *.tsbuildinfo
 /scripts/.extraction-cache/
 /dist/
+/pages-dist/
 /.wrangler/
 # Checkout-local execution profile and tool state; never publish them.
 /.sites-runtime/

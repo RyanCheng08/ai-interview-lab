@@ -6,6 +6,21 @@
 
 界面默认中文，可切换英文；题干、答案、章节名称和订正目前均为中文。切换界面语言不会改变题目 ID 或学习记录。
 
+## GitHub Pages 版本
+
+公开源码仓库：[RyanCheng08/ai-interview-lab](https://github.com/RyanCheng08/ai-interview-lab)。
+
+项目新增独立的静态入口，复用现有界面和题库。Pages 版不需要登录，收藏、笔记和进度保存在当前浏览器，支持 JSON 备份导出与合并导入；原 Sites 版继续使用账号数据库，两者记录独立。
+
+```powershell
+npm ci
+npm run test:pages
+npm run build:pages
+npm run preview:pages
+```
+
+`.github/workflows/pages.yml` 在推送到 `main` 后自动构建并发布；PR 只进行检查。发布目录为 `pages-dist/`，资源路径自动使用 GitHub Pages 返回的前缀。首次启用及完整说明见 [docs/github-pages.md](docs/github-pages.md)。浏览器需支持 Web Locks 才能写入进度，以防多个标签页同时覆盖笔记。
+
 ## 本地运行
 
 要求 Node.js 22.13 以上，使用项目锁文件安装依赖。

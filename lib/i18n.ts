@@ -1,6 +1,6 @@
 import type {Locale,SourceId} from "./contracts";
 const zh={
-brand:"AI 面试练习室",workspace:"学习工作台",library:"题库浏览",practice:"模拟练习",review:"收藏与复习",overview:"学习进度",topics:"专题题库",
+brand:"AI 面试练习室",savedLocal:"学习记录保存在此浏览器",localDevice:"本地学习空间",localHelp:"清除浏览器数据或更换设备前，请导出备份。备份包含已保存的笔记、收藏和进度，不含未保存草稿。",exportBackup:"导出备份",importBackup:"导入备份",importSuccess:"备份已合并，较新的记录会保留。",backupFailed:"备份操作失败，请检查文件格式或浏览器存储权限。",workspace:"学习工作台",library:"题库浏览",practice:"模拟练习",review:"收藏与复习",overview:"学习进度",topics:"专题题库",
 eyebrow:"BUILD YOUR NEXT CHAPTER",headline:"把知识，练成回答。",subtitle:"按专题梳理知识，在每一次练习中找到需要补强的地方。",start:"开始练习",
 total:"全部题目",sources:"专题资料",pages:"原始内容",mastery:"已掌握",qUnit:"道",sourceUnit:"份",pageUnit:"页",search:"搜索题目、题号、知识点…",
 allSources:"全部专题",allChapters:"全部章节",all:"全部状态",unseen:"未练习",learning:"待加强",mastered:"已掌握",favorite:"已收藏",due:"待复习",
@@ -16,7 +16,7 @@ reviewed:"已练题目",attempts:"自评次数",bookmarks:"收藏题目",progres
 };
 type Dictionary={ [K in keyof typeof zh]:string };
 const en:Dictionary={
-brand:"AI Interview Lab",workspace:"Study workspace",library:"Question bank",practice:"Practice",review:"Saved & review",overview:"Your progress",topics:"SUBJECTS",
+brand:"AI Interview Lab",savedLocal:"Progress saved in this browser",localDevice:"Local study space",localHelp:"Export a backup before clearing browser data or moving devices. Backups include saved notes, bookmarks and progress, excluding unsaved drafts.",exportBackup:"Export backup",importBackup:"Import backup",importSuccess:"Backup merged; newer records are preserved.",backupFailed:"Backup failed. Check the file format or browser storage permissions.",workspace:"Study workspace",library:"Question bank",practice:"Practice",review:"Saved & review",overview:"Your progress",topics:"SUBJECTS",
 eyebrow:"BUILD YOUR NEXT CHAPTER",headline:"Turn knowledge into answers.",subtitle:"Explore each subject, practise your explanation, and discover what to strengthen.",start:"Start practising",
 total:"Questions",sources:"Source documents",pages:"Source pages",mastery:"Mastered",qUnit:"",sourceUnit:"",pageUnit:"",search:"Search questions, numbers, concepts…",
 allSources:"All subjects",allChapters:"All chapters",all:"All statuses",unseen:"Not practised",learning:"Needs work",mastered:"Mastered",favorite:"Bookmarked",due:"To review",

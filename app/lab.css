@@ -18,3 +18,8 @@ body{margin:0}button,a,input,textarea{touch-action:manipulation}button:focus-vis
 
 .catalog-toolbar [data-slot="select-trigger"],.answer-tabs button,.self-rate p,.editorial p{font-size:14px}.original-text{font-size:16px}.page-intro p{font-size:15px}
 
+.local-storage-notice{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 18px;margin:0 0 20px;border:1px solid #d6e3f3;border-radius:12px;background:#edf4ff;color:#31476c;font-size:13px}
+.local-storage-notice strong{display:block;font-size:14px}
+.local-storage-notice p{margin:4px 0 0;max-width:680px;line-height:1.6}
+.backup-actions{display:flex;gap:8px;flex-shrink:0}
+@media(max-width:650px){.local-storage-notice{align-items:flex-start;flex-direction:column;gap:10px}.backup-actions{flex-wrap:wrap}}
